@@ -1,0 +1,21 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/canary: "true"
+    nginx.ingress.kubernetes.io/canary-weight: "20"
+  labels:
+    app: demo
+  name: demo-ingress
+  namespace: demo-canary
+spec:
+  rules:
+  - host: canary-demo.example.com
+    http:
+      paths:
+      - backend:
+          serviceName: demo-canary
+          servicePort: 80
+        path: /
+---

@@ -1,0 +1,18 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    app: app
+    version: 1.0.0
+  name: demo-ingress
+  namespace: demo-prod
+spec:
+  rules:
+  - host: canary-demo.example.com
+    http:
+      paths:
+      - backend:
+          serviceName: demo-prod
+          servicePort: 80
+        path: /
