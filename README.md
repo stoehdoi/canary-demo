@@ -13,9 +13,9 @@ This repository contains all resources that are required to test the canary feat
 First of all, change the host definition in the ingress manifests ***deploy/prod-ingress.yaml*** and ***deploy/canary-ingress.yaml*** from canary-demo.example.com to your URL
   
 ##### Deploy production release  
-Roll-out the stalbe version 1.0.0 to the cluster
+Roll-out the stable version 1.0.0 to the cluster
 ```bash
-$ make deploy-prod
+$ make step-1
 ```
   
 ##### Run tests  
@@ -27,7 +27,7 @@ $ curl -s "http://<your_URL>/metrics" | jq '.calls'
 If everything is working as expected, the curl command should return "1000".
   
 ##### Reset request counter  
-Send GET requests to /reset endpoint to set the reqeust counter to zero
+Send GET requests to /reset endpoint to set the request counter to zero
 ```bash
 $ curl "http://<your_URL>/reset"
 ```
@@ -35,7 +35,7 @@ $ curl "http://<your_URL>/reset"
 ##### Canary deployment  
 Push the new software version 1.0.1 as a canary deployment to the cluster
 ```bash
-$ make deploy-canary
+$ make step-2
 ```
   
 ##### Perform tests  
@@ -52,7 +52,7 @@ $ curl -s http://localhost:8080/metrics | jq '.calls'
 $ kubectl -n demo-prod port-forward <pod-name> 8081:8080
 $ curl -s http://localhost:8081/metrics | jq '.calls'
 ```
-Unless the weight has been changed to a different value, you should see approximately 800 requests being served by the production deployment and the rmainig 200 by the canary. 
+Unless the weight has been changed to a different value, you should see approximately 800 requests being served by the production deployment and the remainig 200 by the canary. 
 
 ### Delete
 Remove all resource from the cluster 
